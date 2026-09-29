@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jepang dari Nol — JFT-Basic A2</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#17181c;--muted:#686b73;--line:#e5e7eb;--soft:#f0f1f4;--good:#087443;--bad:#b42318;--accent:#17181c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button{font:inherit;border:0;cursor:pointer}.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:#17181c;color:#fff;padding:22px;position:sticky;top:0;height:100vh}
+.logo{font-size:20px;font-weight:900;margin-bottom:24px}.logo small{display:block;color:#aeb0b8;font-weight:500;font-size:11px;margin-top:4px}
+nav button{display:block;width:100%;text-align:left;background:transparent;color:#d7d8dd;padding:12px 13px;border-radius:10px;margin:3px 0;font-weight:700}
+nav button.active,nav button:hover{background:#303137;color:#fff}
+.sideTarget{position:absolute;bottom:20px;left:22px;right:22px;background:#292a30;padding:14px;border-radius:14px;font-size:12px;color:#c7c8ce}
+main{max-width:1200px;width:100%;padding:28px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top h1{margin:0;font-size:28px}.hamb{display:none}
+.page{display:none}.page.active{display:block}
+.hero{background:#17181c;color:#fff;border-radius:24px;padding:28px;display:grid;grid-template-columns:1.6fr 1fr;gap:22px}
+.hero h2{font-size:40px;line-height:1.05;margin:10px 0}.hero p{color:#c8c9cf;line-height:1.6}.pill{display:inline-block;padding:6px 9px;border-radius:99px;background:var(--soft);font-size:11px;font-weight:900;color:#45474d}.darkpill{background:#2e2f35;color:#ddd}
+.primary,.secondary{padding:11px 15px;border-radius:11px;font-weight:800}.primary{background:#fff;color:#111}.secondary{background:var(--soft);color:#222}.secondary:disabled{opacity:.45;cursor:not-allowed}
+.countdown{background:#292a30;border-radius:18px;padding:20px}.countdown .big{font-size:34px;font-weight:900;margin:6px 0}.bar{height:10px;background:#3d3e45;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:#fff}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}.card h3{margin:0 0 7px}.num{font-size:28px;font-weight:900}.muted{color:var(--muted);font-size:13px;line-height:1.55}
+.section{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:16px}.section h2{margin-top:0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.lessonList{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.lessonItem{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.lessonItem.done{border-color:#9bd7b8}.lessonItem h3{margin:7px 0}
+.kanaGrid{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}.kanaCell{padding:12px 5px;text-align:center;background:#f7f7f8;border:1px solid var(--line);border-radius:10px}.kanaCell b{display:block;font-size:24px}.kanaCell span{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.tabs button{background:var(--soft);padding:9px 12px;border-radius:9px;font-weight:800}.tabs button.active{background:#17181c;color:#fff}
+.flash{max-width:540px;margin:15px auto;text-align:center}.flash .jp{font-size:68px;font-weight:900;margin:25px}.flash .romaji{font-size:22px;font-weight:800}.flash .meaning{color:var(--muted);margin:8px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:650px;margin:18px auto}.choice{padding:14px;border:2px solid var(--line);border-radius:12px;background:#fff;font-weight:800}.choice:hover{border-color:#777}.choice:disabled{cursor:default}.feedback{text-align:center;min-height:24px;font-weight:900}.good{color:var(--good)}.bad{color:var(--bad)}
+.qbox{max-width:760px;margin:auto}.qtext{font-size:21px;font-weight:800;margin:18px 0}.audio{display:flex;gap:8px;justify-content:center;margin:12px}.result{text-align:center}.result .score{font-size:52px;font-weight:950}.statrow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line)}
+.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:10px;border-bottom:1px solid var(--line);font-size:13px}
+.search{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin-bottom:12px}
+.schedule{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.day{padding:15px;border:1px solid var(--line);border-radius:14px}.day b{display:block;margin-bottom:5px}
+.hidden{display:none!important}.authscreen{position:fixed;inset:0;background:rgba(12,14,18,.78);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}.authcard{background:#fff;border-radius:20px;padding:24px;width:min(440px,100%);box-shadow:0 20px 70px #0004}.authcard input{display:block;width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin:8px 0 14px}.authactions{display:flex;gap:8px;flex-wrap:wrap}.userbar{display:flex;gap:10px;align-items:center}.userbar button{border-radius:9px;padding:9px 12px;background:#eee;font-weight:700}.toast{position:fixed;right:20px;bottom:20px;background:#17181c;color:#fff;padding:12px 15px;border-radius:10px;display:none}
+footer{text-align:center;color:#777;font-size:12px;padding:30px}
+@media(max-width:900px){.app{display:block}aside{height:auto;position:relative;padding:14px}.logo{margin-bottom:8px}.sideTarget{display:none}nav{display:flex;overflow:auto;gap:4px}nav button{white-space:nowrap;width:auto}.top{margin-top:14px}.hamb{display:none}.cards{grid-template-columns:1fr 1fr}.lessonList,.schedule{grid-template-columns:1fr 1fr}.hero{grid-template-columns:1fr}.kanaGrid{grid-template-columns:repeat(6,1fr)}}
+@media(max-width:600px){main{padding:15px}.cards,.lessonList,.grid2,.schedule{grid-template-columns:1fr}.hero h2{font-size:32px}.choices{grid-template-columns:1fr}.kanaGrid{grid-template-columns:repeat(5,1fr)}}
+</style>
+<link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#18201d"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<div id="authScreen" class="authscreen"><div class="authcard"><h2>🇯🇵 Jepang dari Nol</h2><p class="muted">Login atau buat akun untuk menyimpan progres dan menyinkronkannya antarperangkat.</p><div class="tabs"><button id="loginTab" class="active" onclick="authMode('login')">Login</button><button id="registerTab" onclick="authMode('register')">Daftar</button></div><form id="authForm"><label id="nameLabel" class="hidden">Nama<input id="authName" autocomplete="name" minlength="2" maxlength="80"></label><label>Email<input id="authEmail" type="email" required autocomplete="email"></label><label>Password<input id="authPassword" type="password" required minlength="10" autocomplete="current-password" placeholder="Minimal 10 karakter"></label><button class="primary" style="background:#17181c;color:white;width:100%" type="submit" id="authSubmit">Login</button></form><p id="authError" class="bad" role="alert"></p><p class="muted">Akun diperlukan agar progres tersimpan di server.</p></div></div>
+<div class="app" id="appRoot">
+<aside>
+  <div class="logo">🇯🇵 Jepang dari Nol<small>JFT-Basic A2 • Study App</small></div>
+  <nav id="nav">
+    <button data-page="dashboard" class="active">🏠 Dashboard</button>
+    <button data-page="roadmap">🗺️ Roadmap</button>
+    <button data-page="kana">あ Hiragana & Katakana</button>
+    <button data-page="vocab">📚 Vocabulary</button>
+    <button data-page="kanji">漢 Kanji</button>
+    <button data-page="grammar">🧩 Grammar</button>
+    <button data-page="listening">🔊 Listening</button>
+    <button data-page="reading">📖 Reading</button>
+    <button data-page="practice">✍️ Practice</button>
+    <button data-page="mock">🎯 Mock Test</button>
+  </nav>
+  <div class="sideTarget">TARGET<br><b>JFT-Basic A2</b><br>12 November 2026</div>
+</aside>
+
+<main>
+<div class="top"><h1 id="title">Dashboard</h1><div class="userbar"><span class="muted" id="userLabel">Menyambungkan...</span><button onclick="logout()">Keluar</button></div></div>
+
+<section id="dashboard" class="page active">
+  <div class="hero">
+    <div><span class="pill darkpill">MODE: 0 → A2</span><h2>Belajar Jepang sampai siap tes.</h2>
+    <p>Fokus pada kemampuan yang benar-benar dipakai dalam kehidupan sehari-hari: membaca, kosakata, percakapan, listening, dan reading.</p>
+    <button class="primary" onclick="go('roadmap')">Mulai belajar →</button></div>
+    <div class="countdown"><div class="muted" style="color:#bbb">Menuju 12 November 2026</div><div class="big" id="days">—</div><div class="muted" style="color:#bbb">hari tersisa</div><div class="bar"><i id="overallBar"></i></div><div class="muted" style="color:#bbb;margin-top:8px" id="overallText">0% progress</div></div>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="muted">XP</div><div class="num" id="xp">0</div><div class="muted">kumpulkan dari quiz</div></div>
+    <div class="card"><div class="muted">Quiz selesai</div><div class="num" id="quizzes">0</div><div class="muted">latihan tersimpan</div></div>
+    <div class="card"><div class="muted">Akurasi</div><div class="num" id="accuracy">—</div><div class="muted">semua quiz</div></div>
+    <div class="card"><div class="muted">Streak</div><div class="num" id="streak">0 🔥</div><div class="muted">hari belajar</div></div>
+  </div>
+  <div class="section"><h2>📝 Review jawaban salah</h2><div id="wrongReview" class="muted">Belum ada jawaban salah.</div></div><div class="section"><h2>🎯 Fokus hari ini</h2><div class="grid2">
+    <div><b>1. Kuasai kana</b><p class="muted">Kenali karakter tanpa mengandalkan romaji.</p><button class="secondary" onclick="go('kana')">Buka Kana</button></div>
+    <div><b>2. 20 kosakata</b><p class="muted">Kata yang muncul dalam situasi hidup sehari-hari.</p><button class="secondary" onclick="go('vocab')">Latihan Vocabulary</button></div>
+  </div></div>
+</section>
+
+<section id="roadmap" class="page">
+  <div class="section"><h2>🗺️ Roadmap 0 → JFT A2</h2><p class="muted">Rute ini dibuat untuk belajar intensif sampai tanggal tes. JFT-Basic saat ini terdiri dari 4 bagian: Script & Vocabulary, Conversation & Expression, Listening Comprehension, dan Reading Comprehension; sekitar 50 soal dalam 60 menit. citeturn0search0</p></div>
+  <div class="lessonList" id="lessonList"></div>
+  <div class="section"><h2>Rencana 43 hari</h2><div class="schedule" id="schedule"></div></div>
+</section>
+
+<section id="kana" class="page">
+ <div class="section"><h2>あ Kana Mastery</h2>
+ <p class="muted">Ini bagian penting sebelum masuk grammar. Pelajari <b>Seion</b> (dasar), <b>Dakuten</b> ゛, <b>Handakuten</b> ゜, <b>Yōon</b> (kombinasi kecil ゃゅょ), lalu <b>Sokuon</b> っ dan <b>Chōon</b> ー.</p>
+ <div class="tabs" id="kanaTabs">
+  <button class="active" onclick="kanaTab('hira',this)">Hiragana dasar</button>
+  <button onclick="kanaTab('kata',this)">Katakana dasar</button>
+  <button onclick="kanaTab('dakuh',this)">Dakuten ゛</button>
+  <button onclick="kanaTab('handah',this)">Handakuten ゜</button>
+  <button onclick="kanaTab('yoonh',this)">Yōon ゃゅょ</button>
+  <button onclick="kanaTab('specialh',this)">Sokuon / Chōon</button>
+ </div>
+ <div class="kanaGrid" id="kanaGrid"></div></div>
+ <div class="section"><h2>📖 Penjelasan cepat</h2><div class="grid2">
+  <div class="card"><h3>Dakuten ゛</h3><p class="muted">Mengubah bunyi tertentu: か → が (ka → ga), さ → ざ, た → だ, は → ば.</p></div>
+  <div class="card"><h3>Handakuten ゜</h3><p class="muted">Khusus baris H: は → ぱ, ひ → ぴ, ふ → ぷ, へ → ぺ, ほ → ぽ.</p></div>
+  <div class="card"><h3>Yōon 拗音</h3><p class="muted">Gabungan bunyi + ゃ/ゅ/ょ kecil: きゃ = kya, しゅ = shu, ちょ = cho.</p></div>
+  <div class="card"><h3>Sokuon & Chōon</h3><p class="muted">っ menggandakan konsonan: がっこう = gakkou. ー memanjangkan vokal, terutama pada Katakana: コーヒー = kōhī.</p></div>
+ </div></div>
+ <div class="section"><h2>Quiz Kana</h2><p class="muted">Quiz sekarang mencampur kana dasar dan bentuk tambahan supaya tidak cuma hafal 46 karakter.</p><div id="kanaQuiz"></div></div>
+</section>
+
+<section id="vocab" class="page">
+ <div class="section"><h2>📚 Vocabulary</h2><input class="search" id="vsearch" placeholder="Cari Jepang / romaji / arti..." oninput="renderVocab()"><div id="vocabTable"></div></div>
+ <div class="section"><h2>Flashcard Quiz</h2><div id="vocabQuiz"></div></div>
+</section>
+
+<section id="kanji" class="page">
+ <div class="section"><h2>漢 Kanji dasar</h2><p class="muted">Kartu kanji dasar dengan bacaan dan arti. Tekan speaker untuk mendengar contoh.</p><div id="kanjiList"></div></div>
+ <div class="section"><h2>Quiz Kanji</h2><div id="kanjiQuiz"></div></div>
+</section>
+<section id="grammar" class="page">
+ <div class="section"><h2>🧩 Grammar & pola kalimat</h2><p class="muted">Belajar pola yang berguna untuk komunikasi sehari-hari.</p><div id="grammarList"></div></div>
+ <div class="section"><h2>Grammar Quiz</h2><div id="grammarQuiz"></div></div>
+</section>
+
+<section id="listening" class="page">
+ <div class="section"><h2>🔊 Listening Lab</h2><p class="muted">Browser akan membaca dialog Jepang. Dengarkan dulu, lalu jawab pertanyaan.</p><div id="listenQuiz"></div></div>
+</section>
+
+<section id="reading" class="page">
+ <div class="section"><h2>📖 Reading Lab</h2><p class="muted">Latihan membaca pesan pendek, jadwal, pengumuman, dan informasi sehari-hari.</p><div id="readingQuiz"></div></div>
+</section>
+
+<section id="practice" class="page">
+ <div class="section"><h2>✍️ Practice Center</h2><div class="grid2">
+   <div class="card"><h3>Script & Vocabulary</h3><p class="muted">Kana, kata, angka, waktu, tempat, benda, pekerjaan.</p><button class="secondary" onclick="practiceStart('vocab')">Mulai</button></div>
+   <div class="card"><h3>Conversation & Expression</h3><p class="muted">Respons, permintaan, ajakan, izin, pengalaman.</p><button class="secondary" onclick="practiceStart('grammar')">Mulai</button></div>
+   <div class="card"><h3>Listening</h3><p class="muted">Situasi toko, stasiun, kantor, rumah, jadwal.</p><button class="secondary" onclick="go('listening')">Mulai</button></div>
+   <div class="card"><h3>Reading</h3><p class="muted">Pesan singkat, tanda, jadwal, informasi praktis.</p><button class="secondary" onclick="go('reading')">Mulai</button></div>
+ </div></div>
+</section>
+
+<section id="mock" class="page">
+ <div class="section"><h2>🎯 Mock Test</h2><p class="muted">Simulasi ringkas offline. Ujian resmi menggunakan CBT dan sekitar 50 soal dalam 60 menit. Aplikasi ini adalah alat belajar, bukan replika soal resmi. citeturn0search3turn0search9</p><button class="primary" onclick="startMock()">Mulai Mock 20 Soal</button></div>
+ <div class="section hidden" id="mockBox"></div>
+</section>
+
+<footer>Jepang dari Nol • Offline study app • Materi soal dibuat orisinal untuk latihan</footer>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const HIRA=[["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"],["か","ka"],["き","ki"],["く","ku"],["け","ke"],["こ","ko"],["さ","sa"],["し","shi"],["す","su"],["せ","se"],["そ","so"],["た","ta"],["ち","chi"],["つ","tsu"],["て","te"],["と","to"],["な","na"],["に","ni"],["ぬ","nu"],["ね","ne"],["の","no"],["は","ha"],["ひ","hi"],["ふ","fu"],["へ","he"],["ほ","ho"],["ま","ma"],["み","mi"],["む","mu"],["め","me"],["も","mo"],["や","ya"],["ゆ","yu"],["よ","yo"],["ら","ra"],["り","ri"],["る","ru"],["れ","re"],["ろ","ro"],["わ","wa"],["を","wo"],["ん","n"]];
+const KATA=[["ア","a"],["イ","i"],["ウ","u"],["エ","e"],["オ","o"],["カ","ka"],["キ","ki"],["ク","ku"],["ケ","ke"],["コ","ko"],["サ","sa"],["シ","shi"],["ス","su"],["セ","se"],["ソ","so"],["タ","ta"],["チ","chi"],["ツ","tsu"],["テ","te"],["ト","to"],["ナ","na"],["ニ","ni"],["ヌ","nu"],["ネ","ne"],["ノ","no"],["ハ","ha"],["ヒ","hi"],["フ","fu"],["ヘ","he"],["ホ","ho"],["マ","ma"],["ミ","mi"],["ム","mu"],["メ","me"],["モ","mo"],["ヤ","ya"],["ユ","yu"],["ヨ","yo"],["ラ","ra"],["リ","ri"],["ル","ru"],["レ","re"],["ロ","ro"],["ワ","wa"],["ヲ","wo"],["ン","n"]];
+const DAKUTEN_H=[["が","ga"],["ぎ","gi"],["ぐ","gu"],["げ","ge"],["ご","go"],["ざ","za"],["じ","ji"],["ず","zu"],["ぜ","ze"],["ぞ","zo"],["だ","da"],["ぢ","ji"],["づ","zu"],["で","de"],["ど","do"],["ば","ba"],["び","bi"],["ぶ","bu"],["べ","be"],["ぼ","bo"]];
+const DAKUTEN_K=[["ガ","ga"],["ギ","gi"],["グ","gu"],["ゲ","ge"],["ゴ","go"],["ザ","za"],["ジ","ji"],["ズ","zu"],["ゼ","ze"],["ゾ","zo"],["ダ","da"],["ヂ","ji"],["ヅ","zu"],["デ","de"],["ド","do"],["バ","ba"],["ビ","bi"],["ブ","bu"],["ベ","be"],["ボ","bo"]];
+const HANDAKU_H=[["ぱ","pa"],["ぴ","pi"],["ぷ","pu"],["ぺ","pe"],["ぽ","po"]];
+const HANDAKU_K=[["パ","pa"],["ピ","pi"],["プ","pu"],["ペ","pe"],["ポ","po"]];
+const YOON_H=[["きゃ","kya"],["きゅ","kyu"],["きょ","kyo"],["しゃ","sha"],["しゅ","shu"],["しょ","sho"],["ちゃ","cha"],["ちゅ","chu"],["ちょ","cho"],["にゃ","nya"],["にゅ","nyu"],["にょ","nyo"],["ひゃ","hya"],["ひゅ","hyu"],["ひょ","hyo"],["みゃ","mya"],["みゅ","myu"],["みょ","myo"],["りゃ","rya"],["りゅ","ryu"],["りょ","ryo"],["ぎゃ","gya"],["ぎゅ","gyu"],["ぎょ","gyo"],["じゃ","ja"],["じゅ","ju"],["じょ","jo"],["びゃ","bya"],["びゅ","byu"],["びょ","byo"],["ぴゃ","pya"],["ぴゅ","pyu"],["ぴょ","pyo"]];
+const YOON_K=[["キャ","kya"],["キュ","kyu"],["キョ","kyo"],["シャ","sha"],["シュ","shu"],["ショ","sho"],["チャ","cha"],["チュ","chu"],["チョ","cho"],["ニャ","nya"],["ニュ","nyu"],["ニョ","nyo"],["ヒャ","hya"],["ヒュ","hyu"],["ヒョ","hyo"],["ミャ","mya"],["ミュ","myu"],["ミョ","myo"],["リャ","rya"],["リュ","ryu"],["リョ","ryo"],["ギャ","gya"],["ギュ","gyu"],["ギョ","gyo"],["ジャ","ja"],["ジュ","ju"],["ジョ","jo"],["ビャ","bya"],["ビュ","byu"],["ビョ","byo"],["ピャ","pya"],["ピュ","pyu"],["ピョ","pyo"]];
+const SPECIAL_H=[["っ","sokuon"],["ー","chōon"],["ん","n"]];
+const SPECIAL_K=[["ッ","sokuon"],["ー","chōon"],["ン","n"]];
+const VOCAB=[
+["私","わたし","watashi","saya"],["あなた","あなた","anata","kamu/Anda"],["人","ひと","hito","orang"],["友達","ともだち","tomodachi","teman"],["家族","かぞく","kazoku","keluarga"],["先生","せんせい","sensei","guru"],["学生","がくせい","gakusei","pelajar"],["会社員","かいしゃいん","kaishain","pegawai perusahaan"],["仕事","しごと","shigoto","pekerjaan"],["会社","かいしゃ","kaisha","perusahaan"],["学校","がっこう","gakkou","sekolah"],["家","いえ","ie","rumah"],["部屋","へや","heya","kamar"],["駅","えき","eki","stasiun"],["電車","でんしゃ","densha","kereta"],["バス","ばす","basu","bus"],["店","みせ","mise","toko"],["病院","びょういん","byouin","rumah sakit"],["銀行","ぎんこう","ginkou","bank"],["今日","きょう","kyou","hari ini"],["明日","あした","ashita","besok"],["昨日","きのう","kinou","kemarin"],["朝","あさ","asa","pagi"],["昼","ひる","hiru","siang"],["夜","よる","yoru","malam"],["今","いま","ima","sekarang"],["時間","じかん","jikan","waktu/jam"],["何時","なんじ","nanji","jam berapa"],["食べる","たべる","taberu","makan"],["飲む","のむ","nomu","minum"],["行く","いく","iku","pergi"],["来る","くる","kuru","datang"],["帰る","かえる","kaeru","pulang"],["見る","みる","miru","melihat"],["聞く","きく","kiku","mendengar/bertanya"],["話す","はなす","hanasu","berbicara"],["読む","よむ","yomu","membaca"],["書く","かく","kaku","menulis"],["買う","かう","kau","membeli"],["使う","つかう","tsukau","menggunakan"],["大きい","おおきい","ookii","besar"],["小さい","ちいさい","chiisai","kecil"],["新しい","あたらしい","atarashii","baru"],["古い","ふるい","furui","lama"],["高い","たかい","takai","mahal/tinggi"],["安い","やすい","yasui","murah"],["暑い","あつい","atsui","panas"],["寒い","さむい","samui","dingin"],["おいしい","おいしい","oishii","enak"],["水","みず","mizu","air"],["ご飯","ごはん","gohan","nasi/makanan"],["パン","パン","pan","roti"],["肉","にく","niku","daging"],["魚","さかな","sakana","ikan"],["野菜","やさい","yasai","sayur"],["りんご","りんご","ringo","apel"],["お金","おかね","okane","uang"],["電話","でんわ","denwa","telepon"],["名前","なまえ","namae","nama"],["住所","じゅうしょ","juusho","alamat"],["天気","てんき","tenki","cuaca"],["雨","あめ","ame","hujan"],["晴れ","はれ","hare","cerah"],["右","みぎ","migi","kanan"],["左","ひだり","hidari","kiri"],["上","うえ","ue","atas"],["下","した","shita","bawah"],["前","まえ","mae","depan/sebelum"],["後ろ","うしろ","ushiro","belakang"],["中","なか","naka","dalam"],["外","そと","soto","luar"],["ここ","ここ","koko","di sini"],["そこ","そこ","soko","di situ"],["どこ","どこ","doko","di mana"],["これ","これ","kore","ini"],["それ","それ","sore","itu"],["いくら","いくら","ikura","berapa harga"],["好き","すき","suki","suka"],["嫌い","きらい","kirai","tidak suka"],["必要","ひつよう","hitsuyou","perlu"],["大丈夫","だいじょうぶ","daijoubu","tidak apa-apa"],["少し","すこし","sukoshi","sedikit"],["たくさん","たくさん","takusan","banyak"]
+];
+const GRAM=[
+["です","X は Y です。","X adalah Y.","私は学生です。","Saya adalah pelajar."],
+["ではありません","X は Y ではありません。","X bukan Y.","私は先生ではありません。","Saya bukan guru."],
+["は","X は ...","penanda topik.","私はインドネシア人です。","Saya orang Indonesia."],
+["の","A の B","kepunyaan/hubungan.","これは私の本です。","Ini buku saya."],
+["も","A も ...","juga.","私も学生です。","Saya juga pelajar."],
+["を","N を V","objek tindakan.","水を飲みます。","Minum air."],
+["に","tempat/waktu に","tujuan/waktu.","7時に起きます。","Bangun jam 7."],
+["で","tempat で V","tempat melakukan aktivitas.","店で買います。","Membeli di toko."],
+["へ","tempat へ 行く","arah/tujuan.","日本へ行きます。","Pergi ke Jepang."],
+["があります/います","N があります / います","ada benda / makhluk hidup.","駅があります。","Ada stasiun."],
+["たいです","V-ます → V-たいです","ingin melakukan.","日本へ行きたいです。","Saya ingin pergi ke Jepang."],
+["ませんか","V-ませんか","ajakan halus.","一緒に行きませんか。","Mau pergi bersama?"],
+["ましょう","V-ましょう","mari melakukan.","食べましょう。","Mari makan."],
+["てください","V-てください","tolong lakukan.","見てください。","Tolong lihat."],
+["てもいいです","V-てもいいです","boleh melakukan.","ここで写真を撮ってもいいですか。","Boleh foto di sini?"],
+["てはいけません","V-てはいけません","tidak boleh.","ここで食べてはいけません。","Tidak boleh makan di sini."],
+["から","A から B","karena.","暑いですから、窓を開けます。","Karena panas, saya membuka jendela."],
+["と","A と B","dan/dengan.","友達と行きます。","Pergi dengan teman."],
+["が好きです","N が好きです","menyukai.","日本料理が好きです。","Saya suka masakan Jepang."],
+["がわかります","N がわかります","mengerti/tahu.","日本語が少しわかります。","Saya sedikit mengerti bahasa Jepang."]
+];
+const LISTEN=[
+["駅はどこですか。","駅はあそこです。","駅はどこですか。","A. あそこです","B. 会社です","C. 家です","A"],
+["明日は何時に来ますか。","9時に来ます。","何時に来ますか。","A. 7時","B. 9時","C. 11時","B"],
+["何を食べますか。","ラーメンを食べます。","何を食べますか。","A. ラーメン","B. パン","C. 魚","A"],
+["今日は雨ですか。","いいえ、晴れです。","今日はどうですか。","A. 雨です","B. 雪です","C. 晴れです","C"],
+["この電車は東京へ行きますか。","はい、行きます。","電車は東京へ行きますか。","A. はい","B. いいえ","C. わかりません","A"]
+];
+const READING=[
+["スーパーは9時から20時までです。","スーパーは何時までですか。",["18時","20時","21時"],"20時"],
+["田中さんは月曜日から金曜日まで働きます。土曜日は休みです。","田中さんは土曜日に何をしますか。",["働きます","学校へ行きます","休みます"],"休みます"],
+["駅の前にコンビニがあります。","コンビニはどこですか。",["駅の前","駅の中","駅の後ろ"],"駅の前"],
+["今日は暑いです。水をたくさん飲んでください。","何を飲んでください。",["お茶","水","コーヒー"],"水"],
+["山田さんへ：今日は会社へ行きません。病院へ行きます。","山田さんはどこへ行きますか。",["会社","病院","学校"],"病院"]
+];
+
+const EMPTY_STATE={xp:0,quizzes:0,right:0,answered:0,done:[],streak:0,last:"",history:[]};
+let state={...EMPTY_STATE,...JSON.parse(localStorage.getItem("jftAppState")||"{}")};
+let authModeNow="login", activeCategory="general", syncTimer=null, currentUser=null;
+function authMode(mode){authModeNow=mode;document.getElementById("nameLabel").classList.toggle("hidden",mode!=="register");document.getElementById("authName").required=mode==="register";document.getElementById("authPassword").autocomplete=mode==="register"?"new-password":"current-password";document.getElementById("authSubmit").textContent=mode==="register"?"Buat akun":"Login";document.getElementById("loginTab").classList.toggle("active",mode==="login");document.getElementById("registerTab").classList.toggle("active",mode==="register");document.getElementById("authError").textContent="";}
+async function api(url,opts={}){const r=await fetch(url,{credentials:"same-origin",headers:{"Content-Type":"application/json",...(opts.headers||{})},...opts});let data={};try{data=await r.json()}catch{}if(!r.ok)throw new Error(data.error||"Permintaan gagal.");return data;}
+function save(){localStorage.setItem("jftAppState",JSON.stringify(state));updateDash();clearTimeout(syncTimer);syncTimer=setTimeout(()=>syncProgress(),350);}
+async function syncProgress(){if(!currentUser)return;try{await api("/api/progress/app_state",{method:"PUT",body:JSON.stringify({completed:state.done.length>=roadmap.length,score:state.right,total:state.answered,details:state})});document.getElementById("userLabel").textContent=currentUser.name+" · Tersinkron";}catch(e){document.getElementById("userLabel").textContent=currentUser.name+" · Offline";}}
+async function bootAuth(){try{const data=await api("/api/auth/me");currentUser=data.user;await loadServerProgress();showApp();}catch{document.getElementById("authScreen").style.display="flex";document.getElementById("appRoot").style.visibility="hidden";}}
+async function loadServerProgress(){const data=await api("/api/progress");const saved=data.progress.find(x=>x.category==="app_state");if(saved&&saved.details){state={...EMPTY_STATE,...saved.details};localStorage.setItem("jftAppState",JSON.stringify(state));}else{const local=JSON.parse(localStorage.getItem("jftAppState")||"{}");state={...EMPTY_STATE,...local};await syncProgress();}updateDash();renderRoadmap();}
+function showApp(){document.getElementById("authScreen").style.display="none";document.getElementById("appRoot").style.visibility="visible";document.getElementById("userLabel").textContent=currentUser.name;updateDash();}
+document.getElementById("authForm").addEventListener("submit",async e=>{e.preventDefault();const err=document.getElementById("authError");err.textContent="";try{const body={email:document.getElementById("authEmail").value.trim(),password:document.getElementById("authPassword").value};if(authModeNow==="register")body.name=document.getElementById("authName").value.trim();const data=await api("/api/auth/"+(authModeNow==="register"?"register":"login"),{method:"POST",body:JSON.stringify(body)});currentUser=data.user;await loadServerProgress();showApp();toast("Berhasil masuk!");}catch(e){err.textContent=e.message;}});
+async function logout(){try{await api("/api/auth/logout",{method:"POST",body:"{}"});}catch{}currentUser=null;document.getElementById("appRoot").style.visibility="hidden";document.getElementById("authScreen").style.display="flex";authMode("login");}
+bootAuth();
+function toast(t){let x=document.getElementById("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",1800)}
+function go(page){activeCategory=page;document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(page).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));document.getElementById("title").textContent=document.querySelector(`[data-page="${page}"]`).textContent.trim();window.scrollTo({top:0,behavior:"smooth"});if(page==="kana")renderKanaQuiz();if(page==="vocab"){renderVocab();renderVocabQuiz()}if(page==="kanji"){renderKanji();renderKanjiQuiz()}if(page==="grammar"){renderGrammar();renderGrammarQuiz()}if(page==="listening")renderListen();if(page==="reading")renderReading();updateDash();}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));
+function updateDash(){
+ const wrong=(state.history||[]).slice(-20).reverse();const wr=document.getElementById("wrongReview");if(wr)wr.innerHTML=wrong.length?wrong.map(x=>`<div class="statrow"><div><b>${x.category}</b><br><span>${x.question}</span><br><span class="muted">Jawaban benar: ${x.correct||"—"}</span></div></div>`).join(""):"Belum ada jawaban salah."
+ document.getElementById("xp").textContent=state.xp;document.getElementById("quizzes").textContent=state.quizzes;
+ document.getElementById("accuracy").textContent=state.answered?Math.round(state.right/state.answered*100)+"%":"—";document.getElementById("streak").textContent=state.streak+" 🔥";
+ let progress=Math.min(100,Math.round((state.done.length/10)*100));document.getElementById("overallBar").style.width=progress+"%";document.getElementById("overallText").textContent=progress+"% roadmap selesai";
+}
+function countdown(){let d=Math.ceil((new Date("2026-11-12T09:00:00+07:00")-new Date())/86400000);document.getElementById("days").textContent=Math.max(0,d);updateDash()}countdown();setInterval(countdown,60000);
+function speak(t){if(!("speechSynthesis"in window)){toast("Browser tidak mendukung audio");return}let u=new SpeechSynthesisUtterance(t);u.lang="ja-JP";u.rate=.72;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function record(ok,xp=10){state.answered++;if(ok){state.right++;state.xp+=xp}state.quizzes++;state.history=state.history||[];if(!ok)state.history.push({category:activeCategory,at:new Date().toISOString(),question:window.currentQuestion||"Latihan",answer:window.currentAnswer||"",correct:window.currentCorrect||""});let today=new Date().toISOString().slice(0,10);if(state.last!==today){state.streak++;state.last=today}save()}
+function kanaTab(kind,btn){
+ document.querySelectorAll("#kanaTabs button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");
+ const map={hira:HIRA,kata:KATA,dakuh:DAKUTEN_H,handah:HANDAKU_H,yoonh:YOON_H,specialh:SPECIAL_H}; renderKana(map[kind]||HIRA);
+}
+function renderKana(arr=HIRA){
+ let g=document.getElementById("kanaGrid");
+ g.innerHTML=arr.map(x=>`<button class="kanaCell" onclick="speak('${x[0]}')"><b>${x[0]}</b><span>${x[1]}</span></button>`).join("");
+}
+renderKana();
+let kqi=0,kqset=[];function renderKanaQuiz(){kqset=[...HIRA,...DAKUTEN_H,...HANDAKU_H,...YOON_H,...SPECIAL_H].sort(()=>Math.random()-.5).slice(0,15);kqi=0;showKanaQ()}
+function showKanaQ(){let q=kqset[kqi];let kanaPool=[...HIRA,...DAKUTEN_H,...HANDAKU_H,...YOON_H];let opts=[q[1],...kanaPool.filter(x=>x[1]!==q[1]).sort(()=>Math.random()-.5).slice(0,3).map(x=>x[1])].sort(()=>Math.random()-.5);document.getElementById("kanaQuiz").innerHTML=`<div class="qbox"><div class="muted">${kqi+1}/${kqset.length}</div><div class="flash"><div class="jp">${q[0]}</div><button class="secondary" onclick="speak('${q[0]}')">🔊 Dengarkan</button></div><div class="choices">${opts.map(o=>`<button class="choice" onclick="kanaAnswer('${o.replace("'","\\'")}','${q[1]}')">${o}</button>`).join("")}</div><div id="kfeed" class="feedback"></div></div>`}
+function kanaAnswer(a,b){window.currentQuestion="Kana "+(kqset[kqi]||[])[0];window.currentAnswer=a;window.currentCorrect=b;let ok=a===b;record(ok,5);let f=document.getElementById("kfeed");f.textContent=ok?"✓ Benar!":"✗ Jawaban: "+b;f.className="feedback "+(ok?"good":"bad");setTimeout(()=>{kqi++;if(kqi<kqset.length)showKanaQ();else document.getElementById("kanaQuiz").innerHTML=`<div class="result"><div class="score">${state.right}/${state.answered}</div><p class="muted">Quiz kana selesai. Ulangi sampai cepat.</p><button class="primary" onclick="renderKanaQuiz()">Ulangi</button></div>`},650)}
+
+function renderVocab(){let s=(document.getElementById("vsearch")?.value||"").toLowerCase();let rows=VOCAB.filter(v=>v.join(" ").toLowerCase().includes(s));document.getElementById("vocabTable").innerHTML=`<table class="table"><tr><th>日本語</th><th>Romaji</th><th>Arti</th><th>Audio</th></tr>${rows.map(v=>`<tr><td><b>${v[0]}</b><br><span class="muted">${v[1]}</span></td><td>${v[2]}</td><td>${v[3]}</td><td><button class="secondary" onclick="speak('${v[0]}')">🔊</button></td></tr>`).join("")}</table>`}
+let vqi=0,vqs=[];function renderVocabQuiz(){vqs=[...VOCAB].sort(()=>Math.random()-.5).slice(0,10);vqi=0;showVQ()}
+function showVQ(){let v=vqs[vqi], opts=[v[3],...VOCAB.filter(x=>x[3]!==v[3]).sort(()=>Math.random()-.5).slice(0,3).map(x=>x[3])].sort(()=>Math.random()-.5);document.getElementById("vocabQuiz").innerHTML=`<div class="qbox"><div class="muted">${vqi+1}/10</div><div class="flash"><div class="jp">${v[0]}</div><div class="romaji">${v[2]}</div><button class="secondary" onclick="speak('${v[0]}')">🔊</button></div><div class="choices">${opts.map(o=>`<button class="choice" onclick="vAnswer(this,'${o.replaceAll("'","\\'")}','${v[3].replaceAll("'","\\'")}')">${o}</button>`).join("")}</div><div id="vfeed" class="feedback"></div></div>`}
+function vAnswer(btn,a,b){window.currentQuestion="Kosakata";window.currentAnswer=a;window.currentCorrect=b;let ok=a===b;record(ok,8);document.querySelectorAll("#vocabQuiz .choice").forEach(x=>x.disabled=true);document.getElementById("vfeed").textContent=ok?"✓ Benar!":"✗ Jawaban: "+b;document.getElementById("vfeed").className="feedback "+(ok?"good":"bad");setTimeout(()=>{vqi++;if(vqi<10)showVQ();else document.getElementById("vocabQuiz").innerHTML=`<div class="result"><div class="score">Selesai!</div><p class="muted">10 kosakata sudah dilatih.</p><button class="primary" onclick="renderVocabQuiz()">Ulangi</button></div>`},600)}
+
+const KANJI=[
+["日","にち・ひ","nichi / hi","hari, matahari","日本は暑いです。"],["月","げつ・つき","getsu / tsuki","bulan","月曜日に働きます。"],["火","か","ka","api","火曜日です。"],["水","すい・みず","sui / mizu","air","水を飲みます。"],["木","もく・き","moku / ki","pohon, kayu","木があります。"],["金","きん・かね","kin / kane","emas, uang","お金があります。"],["土","ど・つち","do / tsuchi","tanah","土曜日は休みです。"],["人","じん・ひと","jin / hito","orang","あの人は先生です。"],["山","さん・やま","san / yama","gunung","山へ行きます。"],["川","かわ","kawa","sungai","川の近くです。"],["大","だい・おお","dai / oo","besar","大きい車です。"],["小","しょう・ちい","shou / chii","kecil","小さい犬です。"],["中","ちゅう・なか","chuu / naka","dalam, tengah","箱の中です。"],["上","じょう・うえ","jou / ue","atas","机の上です。"],["下","か・した","ka / shita","bawah","机の下です。"],["学","がく","gaku","belajar","学生です。"],["生","せい・い","sei / i","hidup, lahir","先生です。"],["先","せん・さき","sen / saki","sebelumnya, depan","先生です。"],["年","ねん・とし","nen / toshi","tahun","一年です。"],["時","じ・とき","ji / toki","waktu, jam","三時です。"]
+];
+function renderKanji(){document.getElementById("kanjiList").innerHTML=KANJI.map(k=>`<div class="statrow"><div><b style="font-size:26px">${k[0]}</b>　<b>${k[3]}</b><br><span class="muted">読み: ${k[1]} · ${k[2]}</span><br>${k[4]}</div><button class="secondary" onclick="speak('${k[4]}')">🔊</button></div>`).join("")}
+let kji=0,kjs=[];function renderKanjiQuiz(){kjs=[...KANJI].sort(()=>Math.random()-.5).slice(0,10);kji=0;showKJ()}
+function showKJ(){let k=kjs[kji],opts=[k[3],...KANJI.filter(x=>x[3]!==k[3]).sort(()=>Math.random()-.5).slice(0,3).map(x=>x[3])].sort(()=>Math.random()-.5);document.getElementById("kanjiQuiz").innerHTML=`<div class="qbox"><div class="muted">${kji+1}/${kjs.length}</div><div class="flash"><div class="jp">${k[0]}</div><div class="romaji">${k[1]}</div></div><div class="choices">${opts.map(o=>`<button class="choice" onclick="kanjiAnswer(this,${JSON.stringify(o)},${JSON.stringify(k[3])})">${o}</button>`).join("")}</div><div id="kjfeed" class="feedback"></div></div>`}
+function kanjiAnswer(btn,a,b){window.currentQuestion="Kanji "+kjs[kji][0];window.currentAnswer=a;window.currentCorrect=b;let ok=a===b;record(ok,8);document.querySelectorAll("#kanjiQuiz .choice").forEach(x=>x.disabled=true);let f=document.getElementById("kjfeed");f.textContent=ok?"✓ Benar!":"✗ Jawaban: "+b;f.className="feedback "+(ok?"good":"bad");setTimeout(()=>{kji++;if(kji<kjs.length)showKJ();else document.getElementById("kanjiQuiz").innerHTML=`<div class="result"><div class="score">Selesai!</div><button class="primary" onclick="renderKanjiQuiz()">Ulangi</button></div>`},650)}
+
+function renderGrammar(){document.getElementById("grammarList").innerHTML=GRAM.map((g,i)=>`<div class="statrow"><div><b>${i+1}. ${g[0]}</b><br><span class="muted">${g[1]} — ${g[2]}</span><br><span>${g[3]}</span><br><span class="muted">${g[4]}</span></div><button class="secondary" onclick="speak('${g[3]}')">🔊</button></div>`).join("")}
+let gqi=0,gqs=[];function renderGrammarQuiz(){gqs=[...GRAM].sort(()=>Math.random()-.5).slice(0,8);gqi=0;showGQ()}
+function showGQ(){let g=gqs[gqi], correct=g[3], opts=[correct,...GRAM.filter(x=>x[3]!==correct).sort(()=>Math.random()-.5).slice(0,3).map(x=>x[3])].sort(()=>Math.random()-.5);document.getElementById("grammarQuiz").innerHTML=`<div class="qbox"><div class="muted">${gqi+1}/8</div><div class="qtext">Mana kalimat yang sesuai dengan arti: <b>${g[4]}</b></div><div class="choices">${opts.map(o=>`<button class="choice" onclick="gAnswer('${o.replaceAll("'","\\'")}','${correct.replaceAll("'","\\'")}')">${o}</button>`).join("")}</div><div id="gfeed" class="feedback"></div></div>`}
+function gAnswer(a,b){window.currentQuestion="Grammar";window.currentAnswer=a;window.currentCorrect=b;let ok=a===b;record(ok,10);document.querySelectorAll("#grammarQuiz .choice").forEach(x=>x.disabled=true);document.getElementById("gfeed").textContent=ok?"✓ Benar!":"✗ Contoh: "+b;document.getElementById("gfeed").className="feedback "+(ok?"good":"bad");setTimeout(()=>{gqi++;if(gqi<gqs.length)showGQ();else document.getElementById("grammarQuiz").innerHTML=`<div class="result"><div class="score">Grammar done!</div><button class="primary" onclick="renderGrammarQuiz()">Ulangi</button></div>`},650)}
+
+let lqi=0;function renderListen(){lqi=0;showLQ()}
+function showLQ(){let q=LISTEN[lqi],opts=[q[3],q[4],q[5]].map(x=>x.slice(3));document.getElementById("listenQuiz").innerHTML=`<div class="qbox"><div class="muted">${lqi+1}/${LISTEN.length}</div><div class="audio"><button class="primary" onclick="speak('${q[0]} ${q[1]}')">🔊 Putar dialog</button></div><div class="qtext">${q[2]}</div><div class="choices">${[q[3],q[4],q[5]].map(x=>`<button class="choice" onclick="lAnswer('${x[0]}','${q[6]}')">${x}</button>`).join("")}</div><div id="lfeed" class="feedback"></div></div>`}
+function lAnswer(a,b){window.currentQuestion="Listening";window.currentAnswer=a;window.currentCorrect=b;let ok=a===b;record(ok,12);document.querySelectorAll("#listenQuiz .choice").forEach(x=>x.disabled=true);document.getElementById("lfeed").textContent=ok?"✓ Benar!":"✗ Dengarkan lagi.";document.getElementById("lfeed").className="feedback "+(ok?"good":"bad");setTimeout(()=>{lqi++;if(lqi<LISTEN.length)showLQ();else document.getElementById("listenQuiz").innerHTML=`<div class="result"><div class="score">Listening selesai</div><button class="primary" onclick="renderListen()">Ulangi</button></div>`},700)}
+
+let rqi=0;function renderReading(){rqi=0;showRQ()}
+function showRQ(){let q=READING[rqi];document.getElementById("readingQuiz").innerHTML=`<div class="qbox"><div class="muted">${rqi+1}/${READING.length}</div><div class="section"><b>${q[0]}</b></div><div class="qtext">${q[1]}</div><div class="choices">${q[2].map(o=>`<button class="choice" onclick="rAnswer('${o.replaceAll("'","\\'")}','${q[3].replaceAll("'","\\'")}')">${o}</button>`).join("")}</div><div id="rfeed" class="feedback"></div></div>`}
+function rAnswer(a,b){window.currentQuestion="Reading";window.currentAnswer=a;window.currentCorrect=b;let ok=a===b;record(ok,12);document.querySelectorAll("#readingQuiz .choice").forEach(x=>x.disabled=true);document.getElementById("rfeed").textContent=ok?"✓ Benar!":"✗ Jawaban: "+b;document.getElementById("rfeed").className="feedback "+(ok?"good":"bad");setTimeout(()=>{rqi++;if(rqi<READING.length)showRQ();else document.getElementById("readingQuiz").innerHTML=`<div class="result"><div class="score">Reading selesai</div><button class="primary" onclick="renderReading()">Ulangi</button></div>`},700)}
+
+const roadmap=[
+["Fondasi","Hari 1–5","Hiragana + Dakuten + Handakuten + Yōon + Sokuon/Chōon","kana"],
+["Katakana","Hari 6–8","Katakana + kata serapan","kana"],
+["Basic words","Hari 9–12","Keluarga, waktu, tempat, pekerjaan","vocab"],
+["Grammar 1","Hari 13–17","です, は, の, も, を, に, で","grammar"],
+["Grammar 2","Hari 18–22","て-form, izin, permintaan, ajakan, keinginan","grammar"],
+["Situasi harian","Hari 23–27","Toko, restoran, stasiun, rumah sakit","vocab"],
+["Listening","Hari 28–32","Dialog pendek + angka + jadwal","listening"],
+["Reading","Hari 33–36","Pesan, jadwal, pengumuman","reading"],
+["Mixed practice","Hari 37–40","Campur 4 skill + weak points","practice"],
+["Final mock","Hari 41–43","Mock test + review + jangan belajar baru H-1","mock"]
+];
+function renderRoadmap(){document.getElementById("lessonList").innerHTML=roadmap.map((x,i)=>`<div class="lessonItem ${state.done.includes(i)?'done':''}"><span class="pill">${i+1}</span><h3>${x[0]}</h3><div class="muted">${x[1]}</div><p class="muted">${x[2]}</p><button class="secondary" onclick="completeLesson(${i},'${x[3]}')">${state.done.includes(i)?"✓ Selesai":"Buka"}</button></div>`).join("");let start=new Date();let labels=["Fondasi kana","Katakana","Kosakata","Grammar dasar","Grammar lanjutan","Situasi","Listening","Reading","Mixed practice","Mock"];document.getElementById("schedule").innerHTML=labels.map((x,i)=>`<div class="day"><b>Fase ${i+1}</b><span class="muted">${x}</span></div>`).join("")}
+function completeLesson(i,page){if(!state.done.includes(i)){state.done.push(i);state.xp+=25;save();toast("+25 XP — lesson selesai!")}go(page);renderRoadmap()}
+function practiceStart(type){go(type)}
+function startMock(){activeCategory="mock";let qs=[];for(let i=0;i<5;i++){let v=VOCAB[Math.floor(Math.random()*VOCAB.length)];qs.push({type:"v",q:"Apa arti "+v[0]+" ("+v[2]+")?",opts:[v[3],VOCAB[Math.floor(Math.random()*VOCAB.length)][3],VOCAB[Math.floor(Math.random()*VOCAB.length)][3],VOCAB[Math.floor(Math.random()*VOCAB.length)][3]],ans:v[3]})}
+for(let i=0;i<5;i++){let g=GRAM[Math.floor(Math.random()*GRAM.length)];qs.push({type:"g",q:"Pilih kalimat yang berarti: "+g[4],opts:[g[3],GRAM[Math.floor(Math.random()*GRAM.length)][3],GRAM[Math.floor(Math.random()*GRAM.length)][3],GRAM[Math.floor(Math.random()*GRAM.length)][3]],ans:g[3]})}
+for(let i=0;i<5;i++){let q=LISTEN[i%LISTEN.length];qs.push({type:"l",q:q[2],opts:[q[3],q[4],q[5]],ans:q[q[6]==="A"?3:q[6]==="B"?4:5]})}
+for(let i=0;i<5;i++){let q=READING[i%READING.length];qs.push({type:"r",q:q[1],opts:q[2],ans:q[3]})}
+qs=qs.sort(()=>Math.random()-.5);let i=0,score=0;function draw(){let q=qs[i],opts=[...new Set(q.opts)].sort(()=>Math.random()-.5);document.getElementById("mockBox").innerHTML=`<div class="qbox"><div class="muted">Soal ${i+1}/20 • ${q.type.toUpperCase()}</div><div class="qtext">${q.q}</div><div class="choices">${opts.map(o=>`<button class="choice" onclick="mockAns('${o.replaceAll("'","\\'")}','${q.ans.replaceAll("'","\\'")}')">${o}</button>`).join("")}</div><div id="mfeed" class="feedback"></div></div>`}window.mockAns=(a,b)=>{window.currentQuestion="Mock test";window.currentAnswer=a;window.currentCorrect=b;let ok=a===b;if(ok)score++;state.answered++;if(ok)state.right++;state.xp+=ok?15:2;document.querySelectorAll("#mockBox .choice").forEach(x=>x.disabled=true);document.getElementById("mfeed").textContent=ok?"✓ Benar":"✗ Jawaban: "+b;document.getElementById("mfeed").className="feedback "+(ok?"good":"bad");setTimeout(()=>{i++;if(i<20)draw();else{state.quizzes++;save();document.getElementById("mockBox").innerHTML=`<div class="result"><div class="score">${score}/20</div><p class="muted">Ini bukan skor resmi JFT. Gunakan hasil untuk melihat area yang perlu diulang.</p><button class="primary" onclick="startMock()">Ulangi Mock</button></div>`}},500)};document.getElementById("mockBox").classList.remove("hidden");draw()}
+renderRoadmap();renderGrammar();updateDash();
+</script>
+<script src="/pwa-register.js"></script>
+</body>
+</html>

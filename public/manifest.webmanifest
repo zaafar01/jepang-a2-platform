@@ -1,0 +1,11 @@
+{
+  "name": "Jepang dari Nol — JFT-Basic A2",
+  "short_name": "JFT A2",
+  "description": "Platform belajar bahasa Jepang untuk persiapan JFT-Basic A2",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f7f4",
+  "theme_color": "#18201d",
+  "icons": []
+}

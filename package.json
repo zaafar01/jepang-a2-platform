@@ -1,0 +1,9 @@
+{
+  "name": "jepang-dari-nol-jft-a2",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Starter platform belajar JFT-Basic A2: Express, PostgreSQL, login, PWA",
+  "main": "server.js",
+  "scripts": {"start": "node server.js", "dev": "node --watch server.js"},
+  "dependencies": {"bcryptjs": "^2.4.3", "connect-pg-simple": "^10.0.0", "dotenv": "^16.4.7", "express": "^4.21.2", "express-session": "^1.18.1", "helmet": "^8.0.0", "pg": "^8.13.1"}
+}
